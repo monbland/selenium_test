@@ -13,7 +13,7 @@ function browse() {
             20000
             );
         // await elements;
-        let element = driver.getTitle();
+        var element = driver.getTitle();
         console.log(elements.getId());
         driver.sleep(5000);
         driver.quit();
@@ -22,4 +22,4 @@ function browse() {
         console.log('something going wrong: \n' + err.toString());
     }
 };
-// browse();
+browse();
