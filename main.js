@@ -1,8 +1,19 @@
 const {Builder, By, Key, until} = require('selenium-webdriver');
 let driver = new Builder().forBrowser('chrome').build();
-async function clickLoadBack(button){
+async function clickLoadBack(button) {
     await button.click();
-    // await driver.navigate().back();
+}
+async function getElementContentByXPath(xpath) {
+    await setTimeout(() => {
+        driver.findElement(By.xpath(xpath)).getText().then(
+            result => {
+                console.log(result)
+            },
+            error => {
+                console.log(error.message)
+            }
+        )
+    }, 2000);
 }
 async function example() {
     try {
@@ -21,18 +32,8 @@ async function example() {
         let loginCompleteTime = new Date() - time;
         await clickLoadBack(navigationItem);
 
-        navigationItem = await driver.wait(until.elementsLocated(By.xpath("//div[@class='content']/div/div/div[1]/div[1]/div/div/p[1]")));
-        await setTimeout(() => {
-            let personsCount = driver.findElement(By.xpath("//div[@class='content']/div/div/div[1]/div[1]/div/div/p[1]"));
-            personsCount.getText().then(
-                result => {
-                    console.log(result.toString())
-                },
-                error => {
-                    console.log(error.message)
-                }
-            )
-        }, 2000);
+        await getElementContentByXPath("/html/body/div/div[2]/div[2]/div/div/div/div[1]/div[1]/div/div/p[1]");
+
         // navigationItem = await driver.wait(until.elementLocated(By.xpath("//a[@href='/health']")));
         // let personsLoad = new Date() - time;
         // await clickLoadBack(navigationItem);
