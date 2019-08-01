@@ -9,16 +9,31 @@ class Timer {
 let timers = [];
 let count = 0;
 
+async function getElementsByXPath(xpath) {
+    let elements = await driver.wait(until.elementLocated(By.xpath(xpath)));
+    elements = await driver.findElements(By.xpath(xpath)).then(
+        result => {return result},
+        error => {console.log(error.message)}
+    );
+    let text = elements[0].getText().then(
+        result => {return result}
+    );
+    return text;
+}
+async function getElementContent(element) {
+    return element.getText();
+}
 async function getElementContentByXPath(xpath) {
     await setTimeout(() => {
-        driver.findElement(By.xpath(xpath)).getText().then(
+        let content = driver.findElement(By.xpath(xpath)).getText().then(
             result => {
-                console.log(result)
+                return result;
             },
             error => {
                 console.log(error.message)
             }
-        )
+        );
+        return content;
     }, 1500);
 }
 async function clickByXPath(xpath) {
@@ -57,16 +72,33 @@ async function example() {
         timers.push(initialTimer);
         driver.get('https://nova.dev.aetalon.tech');
         count++;
-        addTimer("page loaded");
+        addTimer("page");
 
         await clickByXPath("//a[@href='/login']");
-        addTimer("authentication loaded");
+        addTimer("authentication");
 
         let inputForm = await driver.wait(until.elementLocated(By.className('form-control')));
         inputForm = await driver.findElements(By.className('form-control'));
         await inputForm[0].sendKeys('Viktor');
         await inputForm[1].sendKeys('7188387q');
         await driver.findElement(By.className('btn-warning')).click();
+        addTimer("login");
+
+        let elements = await getElementsByXPath("//span");
+        await setTimeout(() => {
+                elements[0].getText().then(
+                    result => {
+                        console.log(result);
+                    },
+                    error => {
+                        console.log(error.message);
+                    }
+                )
+            }, 3000);
+        console.log(elements[0].getText());
+        // for (let i = 0; i < elements.length; i++) {
+        //     await console.log(getElementContent(elements[i]));
+        // }
 
         await setTimeout(() => {
             driver.quit();

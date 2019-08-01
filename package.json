@@ -1,8 +1,13 @@
 {
-  "name": "selenium-test",
+  "name": "selenium_test",
   "version": "1.0.0",
-  "description": "test in selenium framework",
+  "description": "",
   "main": "main.js",
+  "dependencies": {
+    "selenium-webdriver": "^4.0.0-alpha.4",
+    "node_modules": "latest"
+  },
+  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -15,10 +20,5 @@
   "bugs": {
     "url": "https://github.com/monbland/selenium_test/issues"
   },
-  "homepage": "https://github.com/monbland/selenium_test#readme",
-  "dependencies": {
-    "requirejs": "^2.3.6",
-    "selenium-webdriver": "^4.0.0-alpha.4",
-    "webdriverjs": "^1.7.5"
-  }
+  "homepage": "https://github.com/monbland/selenium_test#readme"
 }
