@@ -1,117 +1,59 @@
 const {Builder, By, Key, until} = require('selenium-webdriver');
-let driver = new Builder().forBrowser('chrome').build();
-class Timer {
-    constructor(name, date) {
-        this.name = name;
-        this.date = date;
-    }
-}
-let timers = [];
-let count = 0;
 
-async function getElementsByXPath(xpath) {
-    let elements = await driver.wait(until.elementLocated(By.xpath(xpath)));
-    elements = await driver.findElements(By.xpath(xpath)).then(
-        result => {return result},
-        error => {console.log(error.message)}
-    );
-    let text = elements[0].getText().then(
-        result => {return result}
-    );
-    return text;
-}
-async function getElementContent(element) {
-    return element.getText();
-}
-async function getElementContentByXPath(xpath) {
-    await setTimeout(() => {
-        let content = driver.findElement(By.xpath(xpath)).getText().then(
-            result => {
-                return result;
-            },
-            error => {
-                console.log(error.message)
-            }
-        );
-        return content;
-    }, 1500);
-}
+//ready
+
+//to-do
+
 async function clickByXPath(xpath) {
-    await setTimeout(() => {
-        driver.findElement(By.xpath(xpath)).click().then(
-            result => {
-            },
-            error => {
-                console.log(error.message)
-            }
-        )
-    }, 2500);
+    let button = await driver.wait(until.elementLocated(By.xpath(xpath)));
+    button = await driver.findElement(By.xpath(xpath));
+    await button.click();
 }
 
-async function fillByXPath(xpath, content) {
-    await setTimeout(() => {
-        driver.findElement(By.xpath(xpath)).sendKeys(content).then(
-            result => {
-            },
-            error => {
-                console.log(error.message)
-            }
-        )
-    }, 1500);
-}
 
-function addTimer(name) {
-    let addedTimer = new Timer(name, new Date());
-    timers.push(addedTimer);
-    count++;
-}
+async function test1(){
+    //initialisation of webdriver
+    let driver = new Builder().forBrowser('chrome').build();
 
-async function example() {
-    try {
-        let initialTimer = new Timer("start", new Date);
-        timers.push(initialTimer);
-        driver.get('https://nova.dev.aetalon.tech');
-        count++;
-        addTimer("page");
+    //load main page
+    await driver.get("https://nova.dev.aetalon.tech/");
 
-        await clickByXPath("//a[@href='/login']");
-        addTimer("authentication");
+    //login starts
+    let button = await driver.wait(until.elementLocated(By.xpath("//a[@href='/login']")));
+    button = await driver.findElement(By.xpath("//a[@href='/login']"));
+    await button.click();
+    let inputForm = await driver.wait(until.elementLocated(By.className("form-control")), 2000);
+    inputForm = await driver.findElements(By.className("form-control"));
+    await inputForm[0].sendKeys("Viktor");
+    await inputForm[1].sendKeys("7188387q");
+    button = await driver.findElement(By.className("btn-warning"));
+    await button.click();
+    //login ends
 
-        let inputForm = await driver.wait(until.elementLocated(By.className('form-control')));
-        inputForm = await driver.findElements(By.className('form-control'));
-        await inputForm[0].sendKeys('Viktor');
-        await inputForm[1].sendKeys('7188387q');
-        await driver.findElement(By.className('btn-warning')).click();
-        addTimer("login");
+    //test dashboard
 
-        let elements = await getElementsByXPath("//span");
-        await setTimeout(() => {
-                elements[0].getText().then(
-                    result => {
-                        console.log(result);
-                    },
-                    error => {
-                        console.log(error.message);
-                    }
-                )
-            }, 3000);
-        console.log(elements[0].getText());
-        // for (let i = 0; i < elements.length; i++) {
-        //     await console.log(getElementContent(elements[i]));
-        // }
+    let numbers = await driver.wait(until.elementLocated(By.xpath("//span")));
+    numbers = await driver.wait(until.elementTextContains(await driver.findElement(By.xpath("/html/body/div/div[2]/div[2]/div/div/div/div[5]/div[2]/div[4]/div/div/section/section/div/div[1]/div/span")),"."))
+    numbers = await driver.findElements(By.xpath("//span"));
+    let numbersText = [];
+    for (let i = 0; i < numbers.length; i++) {
+        let string = await numbers[i].getText();
+        numbersText.push(string);
+        await console.log(numbersText[i]);
+    }
 
-        await setTimeout(() => {
+    //test dashboard ends
+
+    setTimeout(
+        () => {
             driver.quit();
-        }, 10000);
-    } catch (err) {
-        console.log('something is wrong: ' + err.toString());
-    }
+        },
+        5000);
 }
-for (var i = 0; i < 1; i++) {
-    try {
-        example();
-    }
-    catch(err) {
-        console.log('something is wrong: ' + err.toString());
-    }
-}
+
+test1().then(
+    function() {console.log("succ")},
+    function(err) {console.error(err)}
+).catch(function(err) {
+    console.error(err);
+});
