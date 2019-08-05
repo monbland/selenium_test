@@ -4,8 +4,7 @@
   "description": "",
   "main": "main.js",
   "dependencies": {
-    "selenium-webdriver": "^4.0.0-alpha.4",
-    "node_modules": "latest"
+    "selenium-webdriver": "^4.0.0-alpha.4"
   },
   "devDependencies": {},
   "scripts": {
