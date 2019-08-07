@@ -12,6 +12,12 @@ async function clickByXPath(xpath,driver) {
     await button.click();
 }
 
+async function clickEnterByXPath(xpath, driver) {
+    let button = await driver.wait(until.elementIsEnabled(await driver.findElement(By.xpath(xpath))),2000);
+    button = await driver.findElement(By.xpath(xpath));
+    await button.sendKeys(Key.ENTER);
+}
+
 async function test1(){
     //initialisation of webdriver
     let driver = new Builder().forBrowser('chrome').build();
@@ -119,9 +125,7 @@ async function test1(){
     timersCounter = timersCounter + timer.time;
 
     //elements on page picker
-    button = await driver.wait(until.elementIsEnabled(await driver.findElement(By.xpath("/html/body/div[1]/div[2]/div[2]/div/div/div/div[3]/div/div[1]/div/div/input"))),2000);
-    button = await driver.findElement(By.xpath("/html/body/div[1]/div[2]/div[2]/div/div/div/div[3]/div/div[1]/div/div/input"));
-    await button.sendKeys(Key.ENTER);
+    await clickEnterByXPath("/html/body/div[1]/div[2]/div[2]/div/div/div/div[3]/div/div[1]/div/div/input", driver);
     button = await driver.wait(until.elementIsVisible(await driver.findElement(By.xpath("/html/body/div[2]/div[1]/div[1]/ul/li[3]"))),2000);
     button = await driver.findElement(By.xpath("/html/body/div[2]/div[1]/div[1]/ul/li[3]"));
     await button.click();
@@ -131,6 +135,47 @@ async function test1(){
     await timers.push(timer);
     timersCounter = timersCounter + timer.time;
 
+
+    await clickEnterByXPath("/html/body/div[1]/div[2]/div[2]/div/div/div/div[3]/div/div[3]/div/div[4]/div[2]/table/tbody/tr[1]/td[12]/div/button/a", driver)
+    await driver.wait(until.elementLocated(By.xpath("//div[@data-msgid='Employee']")),3000);
+    timer = new TimeCount((new Date - timers[0].time - timersCounter),"open person page");
+    await timers.push(timer);
+    timersCounter = timersCounter + timer.time;
+
+    //testing of data pickers
+    //day
+    // await driver.wait(until.elementIsEnabled(await driver.findElement(By.xpath("//div[@data-toggle='timeButtons']/button[1]"))),2000);
+    // await clickByXPath("//div[@data-toggle='timeButtons']/button[1]",driver);
+    await clickEnterByXPath("//div[@data-toggle='timeButtons']/button[1]", driver);
+    button = await driver.wait(until.elementTextContains(await driver.findElement(By.xpath("/html/body/div/div[2]/div[2]/div/div/div[1]/div[3]/div[2]/div[4]/div/div/footer/div[2]")),"сегодня"),2000);
+    timer = new TimeCount((new Date - timers[0].time - timersCounter),"day button checked");
+    await timers.push(timer);
+    timersCounter = timersCounter + timer.time;
+
+    //week
+    await clickEnterByXPath("//div[@data-toggle='timeButtons']/button[2]",driver);
+    button = await driver.wait(until.elementTextContains(await driver.findElement(By.xpath("/html/body/div/div[2]/div[2]/div/div/div[1]/div[3]/div[2]/div[4]/div/div/footer/div[2]")),"неделю"),2000);
+    timer = new TimeCount((new Date - timers[0].time - timersCounter),"week button checked");
+    await timers.push(timer);
+    timersCounter = timersCounter + timer.time;
+
+    //month
+    await clickEnterByXPath("//div[@data-toggle='timeButtons']/button[3]",driver);
+    button = await driver.wait(until.elementTextContains(await driver.findElement(By.xpath("/html/body/div/div[2]/div[2]/div/div/div[1]/div[3]/div[2]/div[4]/div/div/footer/div[2]")),"месяц"),2000);
+    timer = new TimeCount((new Date - timers[0].time - timersCounter),"month button checked");
+    await timers.push(timer);
+    timersCounter = timersCounter + timer.time;
+
+    //manual data pickers
+    inputForm = await driver.findElement(By.xpath("//input[@placeholder='Начальная дата']"));
+    await inputForm.sendKeys("2019-08-14");
+    inputForm = await driver.findElement(By.xpath("//input[@placeholder='Конечная дата']"));
+    await inputForm.sendKeys("2019-08-31");
+    await clickByXPath("/html/body/div[1]/div[2]/div[2]/div/div/div[1]/div[2]/div/div",driver);
+    button = await driver.wait(until.elementTextContains(await driver.findElement(By.xpath("/html/body/div/div[2]/div[2]/div/div/div[1]/div[3]/div[2]/div[4]/div/div/footer/div[2]")),"14.08.19 по 31.08.19"),2000);
+    timer = new TimeCount((new Date - timers[0].time - timersCounter),"date picker checked");
+    await timers.push(timer);
+    timersCounter = timersCounter + timer.time;
 
     // await clickByXPath("/html/body/div[1]/div[2]/div[2]/div/div/div/div[3]/div/div[5]/ul/li[3]/a",driver);
     // button = await driver.wait(until.elementIsEnabled(await driver.findElement(By.xpath("/html/body/div[1]/div[2]/div[2]/div/div/div/div[3]/div/div[5]/ul/li[3]"))),2000);
