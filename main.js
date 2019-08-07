@@ -118,7 +118,7 @@ async function test1(){
     await timers.push(timer);
     timersCounter = timersCounter + timer.time;
 
-
+    //elements on page picker
     button = await driver.wait(until.elementIsEnabled(await driver.findElement(By.xpath("/html/body/div[1]/div[2]/div[2]/div/div/div/div[3]/div/div[1]/div/div/input"))),2000);
     button = await driver.findElement(By.xpath("/html/body/div[1]/div[2]/div[2]/div/div/div/div[3]/div/div[1]/div/div/input"));
     await button.sendKeys(Key.ENTER);
@@ -131,7 +131,11 @@ async function test1(){
     await timers.push(timer);
     timersCounter = timersCounter + timer.time;
 
-    await clickByXPath("/html/body/div[1]/div[2]/div[2]/div/div/div/div[3]/div/div[5]/ul/li[3]/a",driver);
+
+    // await clickByXPath("/html/body/div[1]/div[2]/div[2]/div/div/div/div[3]/div/div[5]/ul/li[3]/a",driver);
+    // button = await driver.wait(until.elementIsEnabled(await driver.findElement(By.xpath("/html/body/div[1]/div[2]/div[2]/div/div/div/div[3]/div/div[5]/ul/li[3]"))),2000);
+    // button = await driver.findElement(By.xpath("/html/body/div[1]/div[2]/div[2]/div/div/div/div[3]/div/div[5]/ul/li[3]"));
+    // await button.click();
     // inputForm = await driver.wait(until.)
 
     timer = new TimeCount((new Date - timers[0].time - timersCounter),"testing of persons page complete");
