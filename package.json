@@ -4,6 +4,7 @@
   "description": "",
   "main": "main.js.bak",
   "dependencies": {
+    "@elastic/elasticsearch": "^7.3.0",
     "fs": "0.0.1-security",
     "selenium-webdriver": "^4.0.0-alpha.4"
   },

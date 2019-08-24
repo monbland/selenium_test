@@ -1,6 +1,8 @@
 const settings = require('./settings.js');
 const {Builder, By, Key, until, Options} = require('selenium-webdriver');
 const fs = require('fs');
+const { Client } = require('@elastic/elasticsearch');
+const client = new Client({ node: settings.elasticurl });
 
 async function clickByXPath(xpath,driver) {
     let button = await driver.wait(until.elementLocated(By.xpath(xpath)),5000);
@@ -38,25 +40,52 @@ class TimeCount {
 class Test {
     constructor() {
         this.url = settings.host;
+        //initialisation of webdriver
+        this.timers = [];
+        this.timersCounter = 0;
+        this.driver = new Builder().forBrowser('chrome').build();
+        let timer = new TimeCount(Date.now(), "initial");
+        this.timers.push(timer);
+        //load main page
+        this.driver.get(this.url);
+        this.log = '';
+        this.name = '';
+    }
+
+    async printLog() {
+        for (let i = 0; i < this.timers.length; i++) {
+            this.log += i + ".  " + this.timers[i].countName + " in " + this.timers[i].time + " ms\n";
+        }
+        console.log(this.log);
+        return this.log;
+    }
+
+    async send() {
+        let indexs = "test" + this.name + this.timers[0].time;
+        for (let i = 1; i < this.timers.length; i++) {
+            await client.index({
+                index: indexs,
+                body: {
+                    countName: this.timers[i].countName,
+                    time: this.timers[i].time,
+                }
+            })
+        }
+    }
+
+    async quit() {
+        setTimeout(
+            () => {
+                this.driver.quit();
+            },
+            5000);
     }
 }
 
 class LoginTest extends Test {
     constructor(){
         super();
-        //initialisation of webdriver
-        this.timers = [];
-        this.timersCounter = 0;
-        // let options = new Options();
-        // options.headless = true;
-        this.driver = new Builder().forBrowser('chrome').build();
-        let timer = new TimeCount(Date.now(), "initial");
-        this.timers.push(timer);
-        //load main page
-        this.driver.get(this.url);
-        // timer = new TimeCount((new Date() - this.timers[0].time), "loading page");
-        // this.timers.push(timer);
-        // this.timersCounter = this.timersCounter + timer.time;
+        this.name = "login";
     }
     async run() {
         //login starts
@@ -85,31 +114,13 @@ class LoginTest extends Test {
 
         //login ends
         this.timersCounter = timer.time + timePoint - this.timers[0].time;
-
-        setTimeout(
-            () => {
-                this.driver.quit();
-            },
-            5000);
     }
 }
 
 class DashboardTest extends Test {
     constructor(){
         super();
-        //initialisation of webdriver
-        this.timers = [];
-        this.timersCounter = 0;
-        // let options = new Options();
-        // options.headless = true;
-        this.driver = new Builder().forBrowser('chrome').build();
-        let timer = new TimeCount(Date.now(), "initial");
-        this.timers.push(timer);
-        //load main page
-        this.driver.get(this.url);
-        // timer = new TimeCount((new Date() - this.timers[0].time), "loading page");
-        // this.timers.push(timer);
-        // this.timersCounter = this.timersCounter + timer.time;
+        this.name = "dashboard";
     }
     async run() {
         //login starts
@@ -190,31 +201,13 @@ class DashboardTest extends Test {
         await this.timers.push(timer);
         this.timersCounter = timer.time + timePoint - this.timers[0].time;
         //test dashboard ends
-
-        setTimeout(
-            () => {
-                this.driver.quit();
-            },
-            5000);
     }
 }
 
 class PersonsTest extends Test {
     constructor(){
         super();
-        //initialisation of webdriver
-        this.timers = [];
-        this.timersCounter = 0;
-        // let options = new Options();
-        // options.headless = true;
-        this.driver = new Builder().forBrowser('chrome').build();
-        let timer = new TimeCount(Date.now(), "initial");
-        this.timers.push(timer);
-        //load main page
-        this.driver.get(this.url);
-        // timer = new TimeCount((new Date() - this.timers[0].time), "loading page");
-        // this.timers.push(timer);
-        // this.timersCounter = this.timersCounter + timer.time;
+        this.name = "persons";
     }
     async run() {
         //login starts
@@ -370,31 +363,13 @@ class PersonsTest extends Test {
         await this.timers.push(timer);
         this.timersCounter = timer.time + timePoint - this.timers[0].time;
         //test persons ends
-
-        setTimeout(
-            () => {
-                this.driver.quit();
-            },
-            5000);
     }
 }
 
 class EventsTest extends Test {
     constructor(){
         super();
-        //initialisation of webdriver
-        this.timers = [];
-        this.timersCounter = 0;
-        // let options = new Options();
-        // options.headless = true;
-        this.driver = new Builder().forBrowser('chrome').build();
-        let timer = new TimeCount(Date.now(), "initial");
-        this.timers.push(timer);
-        //load main page
-        this.driver.get(this.url);
-        // timer = new TimeCount((new Date() - this.timers[0].time), "loading page");
-        // this.timers.push(timer);
-        // this.timersCounter = this.timersCounter + timer.time;
+        this.name = "events";
     }
     async run() {
         //login starts
@@ -466,31 +441,13 @@ class EventsTest extends Test {
         await this.timers.push(timer);
         this.timersCounter = timer.time + timePoint - this.timers[0].time;
         //test events ends
-
-        setTimeout(
-            () => {
-                this.driver.quit();
-            },
-            5000);
     }
 }
 
 class DevicesTest extends Test {
     constructor(){
         super();
-        //initialisation of webdriver
-        this.timers = [];
-        this.timersCounter = 0;
-        // let options = new Options();
-        // options.headless = true;
-        this.driver = new Builder().forBrowser('chrome').build();
-        let timer = new TimeCount(Date.now(), "initial");
-        this.timers.push(timer);
-        //load main page
-        this.driver.get(this.url);
-        // timer = new TimeCount((new Date() - this.timers[0].time), "loading page");
-        // this.timers.push(timer);
-        // this.timersCounter = this.timersCounter + timer.time;
+        this.name = "devices";
     }
     async run() {
         //login starts
@@ -587,52 +544,31 @@ class DevicesTest extends Test {
         this.timersCounter = timer.time + timePoint - this.timers[0].time;
 
         //test devices ends
-
-        setTimeout(
-            () => {
-                this.driver.quit();
-            },
-            5000);
     }
 }
 
 async function test1() {
-    // let driverWithCounter = new DriverWithTimeCounter();
-    // await driverWithCounter.initDriver();
-    // await driverWithCounter.login();
     let errorCount = 0;
     let log = "";
     for (let i = 0; i < settings.iterations; i++) {
-        let test = new DashboardTest();
+        let test = new DevicesTest();
         await test.run().catch(error => {
             console.error(error);
-            console.log(i + " iteration, " + driverWithCounter.timers[driverWithCounter.timers.length - 1].countName + " on events");
-            log += error + "\n" + i + " iteration, " + driverWithCounter.timers[driverWithCounter.timers.length - 1].countName + " on events\n";
+            console.log(i + " iteration, " + test.timers[test.timers.length - 1].countName + " on events");
+            log += error + "\n" + i + " iteration, " + test.timers[test.timers.length - 1].countName + " on events\n";
             errorCount++;
-        });;
-
-        let timer = new TimeCount((new Date()), i + 1 + " iteration complete, " + errorCount + " errors found");
-        await test.timers.push(timer);
-        for (let i = 0; i < test.timers.length; i++) {
-            await console.log(i + ".  " + test.timers[i].countName + " in " + test.timers[i].time + " ms");
-            log += i + ".  " + test.timers[i].countName + " in " + test.timers[i].time + " ms\n";
-        }
+        });
+        log += await test.printLog();
+        test.quit();
+        test.send();
     }
-    // log += "we found " + errorCount + " errors\n";
-    // let timer = new TimeCount((new Date() - driverWithCounter.timers[0].time), "all test complete");
-    // await driverWithCounter.timers.push(timer);
 
 
-    await fs.writeFile('./log.txt', log, (err) => {
+    await fs.writeFile(settings.logpath, log, (err) => {
         if (err) {
             console.error(err);
         }
-        //файл записан успешно
     });
-    // setTimeout(
-    //     () => {
-    //         test.driver.quit();
-    //     },
-    //     10000);
 }
+
 test1().then(result => {console.log("succ")}, error => {console.error(error)});
