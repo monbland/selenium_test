@@ -50,6 +50,8 @@ class Test {
         this.driver.get(this.url);
         this.log = '';
         this.name = '';
+        this.elasticIndex = settings.elasticindex;
+        this.elasticType = '';
     }
 
     async printLog() {
@@ -61,16 +63,30 @@ class Test {
     }
 
     async send() {
-        let indexs = "test" + this.name + this.timers[0].time;
-        for (let i = 1; i < this.timers.length; i++) {
+        this.timersCounter = 0;
+        for (let i = 1; i < this.timers.length - 1; i++) {
+            this.timersCounter += this.timers[i].time;
+            let date = this.timers[0].time + this.timersCounter;
             await client.index({
-                index: indexs,
+                index: this.elasticIndex,
                 body: {
+                    type: this.elasticType,
                     countName: this.timers[i].countName,
                     time: this.timers[i].time,
+                    date: date,
                 }
-            })
-        }
+            });
+        };
+        let date = this.timers[0].time + this.timers[this.timers.length - 1].time;
+        await client.index({
+            index: this.elasticIndex,
+            body: {
+                type: this.elasticType,
+                countName: this.timers[this.timers.length - 1].countName,
+                time: this.timers[this.timers.length - 1].time,
+                date: date,
+            }
+        });
     }
 
     async quit() {
@@ -86,6 +102,7 @@ class LoginTest extends Test {
     constructor(){
         super();
         this.name = "login";
+        this.elasticType = 'login';
     }
     async run() {
         //login starts
@@ -121,6 +138,7 @@ class DashboardTest extends Test {
     constructor(){
         super();
         this.name = "dashboard";
+        this.elasticType = 'dashboard';
     }
     async run() {
         //login starts
@@ -208,6 +226,7 @@ class PersonsTest extends Test {
     constructor(){
         super();
         this.name = "persons";
+        this.elasticType = 'persons';
     }
     async run() {
         //login starts
@@ -370,6 +389,7 @@ class EventsTest extends Test {
     constructor(){
         super();
         this.name = "events";
+        this.elasticType = 'events';
     }
     async run() {
         //login starts
@@ -448,6 +468,7 @@ class DevicesTest extends Test {
     constructor(){
         super();
         this.name = "devices";
+        this.elasticType = 'devices';
     }
     async run() {
         //login starts
@@ -551,7 +572,7 @@ async function test1() {
     let errorCount = 0;
     let log = "";
     for (let i = 0; i < settings.iterations; i++) {
-        let test = new DevicesTest();
+        let test = new DashboardTest();
         await test.run().catch(error => {
             console.error(error);
             console.log(i + " iteration, " + test.timers[test.timers.length - 1].countName + " on events");

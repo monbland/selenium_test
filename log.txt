@@ -1,50 +1,180 @@
-0.  initial in 1566567021423 ms
-1.  day button checked in 5251 ms
-2.  week button checked in 102 ms
-3.  month button checked in 515 ms
-4.  date picker checked in 253 ms
-5.  company picker checked in 162 ms
-6.  department picker checked in 173 ms
-7.  settings button checked in 134 ms
-8.  testing of dashboard complete in 6590 ms
-9.  1 iteration complete, 0 errors found in Fri Aug 23 2019 16:30:28 GMT+0300 (Moscow Standard Time) ms
-0.  initial in 1566567028016 ms
-1.  day button checked in 8822 ms
-2.  week button checked in 514 ms
-3.  month button checked in 93 ms
-4.  date picker checked in 256 ms
-5.  company picker checked in 212 ms
-6.  department picker checked in 121 ms
-7.  settings button checked in 147 ms
-8.  testing of dashboard complete in 10165 ms
-9.  2 iteration complete, 0 errors found in Fri Aug 23 2019 16:30:38 GMT+0300 (Moscow Standard Time) ms
-0.  initial in 1566567038182 ms
-1.  day button checked in 5650 ms
-2.  week button checked in 449 ms
-3.  month button checked in 534 ms
-4.  date picker checked in 263 ms
-5.  company picker checked in 213 ms
-6.  department picker checked in 123 ms
-7.  settings button checked in 147 ms
-8.  testing of dashboard complete in 7379 ms
-9.  3 iteration complete, 0 errors found in Fri Aug 23 2019 16:30:45 GMT+0300 (Moscow Standard Time) ms
-0.  initial in 1566567045562 ms
-1.  day button checked in 5122 ms
-2.  week button checked in 953 ms
-3.  month button checked in 501 ms
-4.  date picker checked in 254 ms
-5.  company picker checked in 221 ms
-6.  department picker checked in 99 ms
-7.  settings button checked in 150 ms
-8.  testing of dashboard complete in 7300 ms
-9.  4 iteration complete, 0 errors found in Fri Aug 23 2019 16:30:52 GMT+0300 (Moscow Standard Time) ms
-0.  initial in 1566567052863 ms
-1.  day button checked in 4943 ms
+0.  initial in 1566826493590 ms
+1.  day button checked in 4500 ms
 2.  week button checked in 524 ms
-3.  month button checked in 631 ms
-4.  date picker checked in 269 ms
-5.  company picker checked in 235 ms
-6.  department picker checked in 114 ms
+3.  month button checked in 97 ms
+4.  date picker checked in 288 ms
+5.  company picker checked in 180 ms
+6.  department picker checked in 147 ms
+7.  settings button checked in 135 ms
+8.  testing of dashboard complete in 5871 ms
+0.  initial in 1566826499472 ms
+1.  day button checked in 5033 ms
+2.  week button checked in 513 ms
+3.  month button checked in 530 ms
+4.  date picker checked in 271 ms
+5.  company picker checked in 192 ms
+6.  department picker checked in 134 ms
+7.  settings button checked in 134 ms
+8.  testing of dashboard complete in 6807 ms
+0.  initial in 1566826506280 ms
+1.  day button checked in 5944 ms
+2.  week button checked in 530 ms
+3.  month button checked in 88 ms
+4.  date picker checked in 260 ms
+5.  company picker checked in 173 ms
+6.  department picker checked in 135 ms
+7.  settings button checked in 153 ms
+8.  testing of dashboard complete in 7283 ms
+0.  initial in 1566826513563 ms
+1.  day button checked in 5084 ms
+2.  week button checked in 975 ms
+3.  month button checked in 501 ms
+4.  date picker checked in 250 ms
+5.  company picker checked in 219 ms
+6.  department picker checked in 122 ms
 7.  settings button checked in 132 ms
-8.  testing of dashboard complete in 6848 ms
-9.  5 iteration complete, 0 errors found in Fri Aug 23 2019 16:30:59 GMT+0300 (Moscow Standard Time) ms
+8.  testing of dashboard complete in 7283 ms
+0.  initial in 1566826520847 ms
+1.  day button checked in 6816 ms
+2.  week button checked in 92 ms
+3.  month button checked in 523 ms
+4.  date picker checked in 248 ms
+5.  company picker checked in 217 ms
+6.  department picker checked in 119 ms
+7.  settings button checked in 134 ms
+8.  testing of dashboard complete in 8149 ms
+0.  initial in 1566826528997 ms
+1.  day button checked in 5201 ms
+2.  week button checked in 797 ms
+3.  month button checked in 511 ms
+4.  date picker checked in 249 ms
+5.  company picker checked in 203 ms
+6.  department picker checked in 104 ms
+7.  settings button checked in 134 ms
+8.  testing of dashboard complete in 7199 ms
+0.  initial in 1566826536196 ms
+1.  day button checked in 5235 ms
+2.  week button checked in 793 ms
+3.  month button checked in 512 ms
+4.  date picker checked in 253 ms
+5.  company picker checked in 217 ms
+6.  department picker checked in 105 ms
+7.  settings button checked in 135 ms
+8.  testing of dashboard complete in 7250 ms
+0.  initial in 1566826543446 ms
+1.  day button checked in 5171 ms
+2.  week button checked in 690 ms
+3.  month button checked in 537 ms
+4.  date picker checked in 267 ms
+5.  company picker checked in 212 ms
+6.  department picker checked in 105 ms
+7.  settings button checked in 131 ms
+8.  testing of dashboard complete in 7113 ms
+0.  initial in 1566826550559 ms
+1.  day button checked in 6704 ms
+2.  week button checked in 94 ms
+3.  month button checked in 512 ms
+4.  date picker checked in 256 ms
+5.  company picker checked in 219 ms
+6.  department picker checked in 101 ms
+7.  settings button checked in 132 ms
+8.  testing of dashboard complete in 8018 ms
+0.  initial in 1566826558578 ms
+1.  day button checked in 4924 ms
+2.  week button checked in 534 ms
+3.  month button checked in 300 ms
+4.  date picker checked in 265 ms
+5.  company picker checked in 192 ms
+6.  department picker checked in 100 ms
+7.  settings button checked in 133 ms
+8.  testing of dashboard complete in 6449 ms
+0.  initial in 1566826565027 ms
+1.  day button checked in 5375 ms
+2.  week button checked in 618 ms
+3.  month button checked in 523 ms
+4.  date picker checked in 248 ms
+5.  company picker checked in 185 ms
+6.  department picker checked in 136 ms
+7.  settings button checked in 131 ms
+8.  testing of dashboard complete in 7216 ms
+0.  initial in 1566826572244 ms
+1.  day button checked in 5979 ms
+2.  week button checked in 521 ms
+3.  month button checked in 95 ms
+4.  date picker checked in 257 ms
+5.  company picker checked in 180 ms
+6.  department picker checked in 132 ms
+7.  settings button checked in 135 ms
+8.  testing of dashboard complete in 7299 ms
+0.  initial in 1566826579544 ms
+1.  day button checked in 5465 ms
+2.  week button checked in 618 ms
+3.  month button checked in 516 ms
+4.  date picker checked in 244 ms
+5.  company picker checked in 191 ms
+6.  department picker checked in 101 ms
+7.  settings button checked in 148 ms
+8.  testing of dashboard complete in 7283 ms
+0.  initial in 1566826586827 ms
+1.  day button checked in 5482 ms
+2.  week button checked in 504 ms
+3.  month button checked in 513 ms
+4.  date picker checked in 249 ms
+5.  company picker checked in 218 ms
+6.  department picker checked in 101 ms
+7.  settings button checked in 134 ms
+8.  testing of dashboard complete in 7201 ms
+0.  initial in 1566826594028 ms
+1.  day button checked in 6584 ms
+2.  week button checked in 94 ms
+3.  month button checked in 498 ms
+4.  date picker checked in 250 ms
+5.  company picker checked in 170 ms
+6.  department picker checked in 137 ms
+7.  settings button checked in 132 ms
+8.  testing of dashboard complete in 7865 ms
+0.  initial in 1566826601893 ms
+1.  day button checked in 4740 ms
+2.  week button checked in 501 ms
+3.  month button checked in 850 ms
+4.  date picker checked in 276 ms
+5.  company picker checked in 180 ms
+6.  department picker checked in 135 ms
+7.  settings button checked in 133 ms
+8.  testing of dashboard complete in 6815 ms
+0.  initial in 1566826608709 ms
+1.  day button checked in 5931 ms
+2.  week button checked in 521 ms
+3.  month button checked in 99 ms
+4.  date picker checked in 270 ms
+5.  company picker checked in 180 ms
+6.  department picker checked in 135 ms
+7.  settings button checked in 134 ms
+8.  testing of dashboard complete in 7270 ms
+0.  initial in 1566826615979 ms
+1.  day button checked in 5359 ms
+2.  week button checked in 806 ms
+3.  month button checked in 509 ms
+4.  date picker checked in 251 ms
+5.  company picker checked in 170 ms
+6.  department picker checked in 136 ms
+7.  settings button checked in 133 ms
+8.  testing of dashboard complete in 7364 ms
+0.  initial in 1566826623343 ms
+1.  day button checked in 5235 ms
+2.  week button checked in 881 ms
+3.  month button checked in 928 ms
+4.  date picker checked in 250 ms
+5.  company picker checked in 203 ms
+6.  department picker checked in 103 ms
+7.  settings button checked in 135 ms
+8.  testing of dashboard complete in 7735 ms
+0.  initial in 1566826631078 ms
+1.  day button checked in 5278 ms
+2.  week button checked in 768 ms
+3.  month button checked in 511 ms
+4.  date picker checked in 253 ms
+5.  company picker checked in 168 ms
+6.  department picker checked in 153 ms
+7.  settings button checked in 133 ms
+8.  testing of dashboard complete in 7264 ms
