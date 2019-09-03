@@ -5,4 +5,4 @@ exports.iterations = 40;
 exports.logpath = "./log.txt";
 exports.elasticurl = 'http://localhost:9200';
 exports.elasticindex = 'test';
-exports.chromepath = './chromedriver';
+exports.chromepath = '/opt/google/chrome/google-chrome';
