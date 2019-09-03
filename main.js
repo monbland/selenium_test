@@ -925,7 +925,7 @@ async function test1() {
     let errorCount = 0;
     let log = "";
     for (let i = 0; i < settings.iterations; i++) {
-        test = new DashboardTest();
+        let test = new DashboardTest();
         await test.run().catch(error => {
             console.error(error);
             console.log(i + " iteration, " + test.timers[test.timers.length - 1].countName + " on events");
@@ -955,7 +955,7 @@ async function test1() {
         log += await test.printLog();
         test.quit();
         test.send();
-        let test = new PersonsTest();
+        test = new PersonsTest();
         await test.run().catch(error => {
             console.error(error);
             console.log(i + " iteration, " + test.timers[test.timers.length - 1].countName + " on events");
