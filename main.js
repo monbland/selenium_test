@@ -926,36 +926,36 @@ async function test1() {
     let errorCount = 0;
     let log = "";
     for (let i = 0; i < settings.iterations; i++) {
-        // let test = new DashboardTest();
-        // await test.run().catch(error => {
-        //     console.error(error);
-        //     console.log(i + " iteration, " + test.timers[test.timers.length - 1].countName + " on events");
-        //     log += error + "\n" + i + " iteration, " + test.timers[test.timers.length - 1].countName + " on events\n";
-        //     errorCount++;
-        // });
-        // log += await test.printLog();
-        // test.quit();
-        // test.send();
-        // test = new EventsTest();
-        // await test.run().catch(error => {
-        //     console.error(error);
-        //     console.log(i + " iteration, " + test.timers[test.timers.length - 1].countName + " on events");
-        //     log += error + "\n" + i + " iteration, " + test.timers[test.timers.length - 1].countName + " on events\n";
-        //     errorCount++;
-        // });
-        // log += await test.printLog();
-        // test.quit();
-        // test.send();
-        // test = new DevicesTest();
-        // await test.run().catch(error => {
-        //     console.error(error);
-        //     console.log(i + " iteration, " + test.timers[test.timers.length - 1].countName + " on events");
-        //     log += error + "\n" + i + " iteration, " + test.timers[test.timers.length - 1].countName + " on events\n";
-        //     errorCount++;
-        // });
-        // log += await test.printLog();
-        // test.quit();
-        // test.send();
+        test = new DashboardTest();
+        await test.run().catch(error => {
+            console.error(error);
+            console.log(i + " iteration, " + test.timers[test.timers.length - 1].countName + " on events");
+            log += error + "\n" + i + " iteration, " + test.timers[test.timers.length - 1].countName + " on events\n";
+            errorCount++;
+        });
+        log += await test.printLog();
+        test.quit();
+        test.send();
+        test = new EventsTest();
+        await test.run().catch(error => {
+            console.error(error);
+            console.log(i + " iteration, " + test.timers[test.timers.length - 1].countName + " on events");
+            log += error + "\n" + i + " iteration, " + test.timers[test.timers.length - 1].countName + " on events\n";
+            errorCount++;
+        });
+        log += await test.printLog();
+        test.quit();
+        test.send();
+        test = new DevicesTest();
+        await test.run().catch(error => {
+            console.error(error);
+            console.log(i + " iteration, " + test.timers[test.timers.length - 1].countName + " on events");
+            log += error + "\n" + i + " iteration, " + test.timers[test.timers.length - 1].countName + " on events\n";
+            errorCount++;
+        });
+        log += await test.printLog();
+        test.quit();
+        test.send();
         let test = new PersonsTest();
         await test.run().catch(error => {
             console.error(error);
