@@ -44,7 +44,7 @@ class Test {
         //initialisation of webdriver
         this.timers = [];
         this.timersCounter = 0;
-        const CHROME_BIN_PATH = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
+        const CHROME_BIN_PATH = settings.chromepath;
         let options = new chromeDriver.Options();
         options.setChromeBinaryPath(CHROME_BIN_PATH);
         options.addArguments('headless');
@@ -482,22 +482,35 @@ class PersonsTest extends Test {
         }
 
         // code that check anchors to persons health/activity/safety pages
-        // wait for victor
-        // let personsPages = ["health/ecg","health/hrv","health/pulse","health/temperature","health/pressure","health/saturation","health/events","activity/steps","activity/calories","activity/distance","activity/events","safety/fall","safety/fixed-state","safety/vibe","safety/hazardous-area","safety/run","safety/events"]
-        // for (let i = 0; i < personsPages.length; i++) {
-        //     await clickEnterByXPath("//a[@href='/persons/1/" + personsPages[i] + "']", this.driver);
-        //     await this.driver.wait(until.elementIsNotVisible(await driver.findElement(By.className("el-loading-mask"))),5000);
-        //     timer = new TimeCount((new Date() - timePoint - this.timersCounter),"person`s " + personsPages[i] + " loaded");
-        //     await this.timers.push(timer);
-        //     this.timersCounter = this.timersCounter + timer.time;
-        //
-        //     await this.driver.navigate().back();
-        //     await this.driver.wait(until.elementLocated(By.xpath("//div[@data-msgid='Employee']")),5000);
-        //     timer = new TimeCount((new Date() - timePoint - this.timersCounter),"back to person page");
-        //     await this.timers.push(timer);
-        //     this.timersCounter = this.timersCounter + timer.time;
-        // }
-        //
+        let personsPages = ["health/ecg","health/hrv","health/pulse","health/temperature","health/pressure","health/saturation","health/events","activity/steps","activity/calories","activity/distance","activity/events","safety/fall","safety/fixed-state","safety/vibe","safety/hazardous-area","safety/run","safety/events"]
+        for (let i = 0; i < personsPages.length; i++) {
+            try {
+                await clickEnterByXPath("//a[@href='/persons/1/" + personsPages[i] + "']", this.driver);
+                await this.driver.wait(until.elementLocated(By.className("el-loading-mask")),20000);
+                await this.driver.wait(until.elementIsNotVisible(await this.driver.findElement(By.className("el-loading-mask"))),20000);
+                timer = new TimeCount((new Date() - timePoint - this.timersCounter),"person`s " + personsPages[i] + " loaded");
+                await this.timers.push(timer);
+                this.timersCounter = this.timersCounter + timer.time;
+            }
+            catch (e) {
+                console.error(e);
+                timer = new TimeCount(-1,e.message);
+                await this.timers.push(timer);
+                this.timersCounter = this.timersCounter + timer.time;
+            }
+
+            try {
+                await this.driver.navigate().back();
+                await this.driver.wait(until.elementLocated(By.xpath("//div[@data-msgid='Employee']")),5000);
+                timer = new TimeCount((new Date() - timePoint - this.timersCounter),"back to person page");
+                await this.timers.push(timer);
+                this.timersCounter = this.timersCounter + timer.time;
+            }
+            catch (e) {
+                console.error(e);
+            }
+        }
+
 
         // check forwarding to device page
         try {
@@ -913,37 +926,37 @@ async function test1() {
     let errorCount = 0;
     let log = "";
     for (let i = 0; i < settings.iterations; i++) {
-        let test = new DashboardTest();
-        await test.run().catch(error => {
-            console.error(error);
-            console.log(i + " iteration, " + test.timers[test.timers.length - 1].countName + " on events");
-            log += error + "\n" + i + " iteration, " + test.timers[test.timers.length - 1].countName + " on events\n";
-            errorCount++;
-        });
-        log += await test.printLog();
-        test.quit();
-        test.send();
-        test = new EventsTest();
-        await test.run().catch(error => {
-            console.error(error);
-            console.log(i + " iteration, " + test.timers[test.timers.length - 1].countName + " on events");
-            log += error + "\n" + i + " iteration, " + test.timers[test.timers.length - 1].countName + " on events\n";
-            errorCount++;
-        });
-        log += await test.printLog();
-        test.quit();
-        test.send();
-        test = new DevicesTest();
-        await test.run().catch(error => {
-            console.error(error);
-            console.log(i + " iteration, " + test.timers[test.timers.length - 1].countName + " on events");
-            log += error + "\n" + i + " iteration, " + test.timers[test.timers.length - 1].countName + " on events\n";
-            errorCount++;
-        });
-        log += await test.printLog();
-        test.quit();
-        test.send();
-        test = new PersonsTest();
+        // let test = new DashboardTest();
+        // await test.run().catch(error => {
+        //     console.error(error);
+        //     console.log(i + " iteration, " + test.timers[test.timers.length - 1].countName + " on events");
+        //     log += error + "\n" + i + " iteration, " + test.timers[test.timers.length - 1].countName + " on events\n";
+        //     errorCount++;
+        // });
+        // log += await test.printLog();
+        // test.quit();
+        // test.send();
+        // test = new EventsTest();
+        // await test.run().catch(error => {
+        //     console.error(error);
+        //     console.log(i + " iteration, " + test.timers[test.timers.length - 1].countName + " on events");
+        //     log += error + "\n" + i + " iteration, " + test.timers[test.timers.length - 1].countName + " on events\n";
+        //     errorCount++;
+        // });
+        // log += await test.printLog();
+        // test.quit();
+        // test.send();
+        // test = new DevicesTest();
+        // await test.run().catch(error => {
+        //     console.error(error);
+        //     console.log(i + " iteration, " + test.timers[test.timers.length - 1].countName + " on events");
+        //     log += error + "\n" + i + " iteration, " + test.timers[test.timers.length - 1].countName + " on events\n";
+        //     errorCount++;
+        // });
+        // log += await test.printLog();
+        // test.quit();
+        // test.send();
+        let test = new PersonsTest();
         await test.run().catch(error => {
             console.error(error);
             console.log(i + " iteration, " + test.timers[test.timers.length - 1].countName + " on events");
