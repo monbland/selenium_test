@@ -102,7 +102,7 @@ class Test {
             () => {
                 this.driver.quit();
             },
-            5000);
+            20000);
     }
 }
 
@@ -255,8 +255,7 @@ class DashboardTest extends Test {
             await inputForm.sendKeys("2019-08-14");
             inputForm = await this.driver.findElement(By.xpath("//input[@placeholder='Конечная дата']"));
             await inputForm.sendKeys("2019-08-31");
-            await clickByXPath("/html/body/div[1]/div[2]/div[2]/div/div/div/div[5]/div[2]/div[2]/div/div[2]", this.driver);
-            button = await this.driver.wait(until.elementTextContains(await this.driver.findElement(By.xpath("/html/body/div[1]/div[2]/div[2]/div/div/div/div[6]/div[4]/div/div/footer/div[2]")), "14.08.19 по 31.08.19"), 5000);
+            await clickAndWaitByXpath("/html/body/div[1]/div[2]/div[2]/div/div/div/div[5]/div[2]/div[2]/div/div[2]", this.driver);
             timer = new TimeCount((new Date() - timePoint - this.timersCounter), "date picker checked");
             await this.timers.push(timer);
             this.timersCounter = this.timersCounter + timer.time;
