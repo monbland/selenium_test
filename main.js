@@ -6,27 +6,27 @@ const { Client } = require('@elastic/elasticsearch');
 const client = new Client({ node: settings.elasticurl });
 
 async function clickByXPath(xpath,driver) {
-    let button = await driver.wait(until.elementLocated(By.xpath(xpath)),5000);
-    button = await driver.wait(until.elementIsEnabled(await driver.findElement(By.xpath(xpath))),5000);
+    let button = await driver.wait(until.elementLocated(By.xpath(xpath)), settings.waitingtime);
+    button = await driver.wait(until.elementIsEnabled(await driver.findElement(By.xpath(xpath))), settings.waitingtime);
     button = await driver.findElement(By.xpath(xpath));
     await button.click();
 }
 
 async function clickAndWaitByXpath(xpath, driver) {
     await clickByXPath(xpath, driver);
-    await driver.wait(until.elementLocated(By.className("el-loading-mask")),20000);
-    await driver.wait(until.elementIsNotVisible(await driver.findElement(By.className("el-loading-mask"))),20000);
+    await driver.wait(until.elementLocated(By.className("el-loading-mask")), settings.waitingtime);
+    await driver.wait(until.elementIsNotVisible(await driver.findElement(By.className("el-loading-mask"))), settings.waitingtime);
 }
 
 async function clickEnterAndWaitByXpath(xpath, driver) {
     await clickEnterByXPath(xpath, driver);
-    await driver.wait(until.elementLocated(By.className("el-loading-mask")),20000);
-    await driver.wait(until.elementIsNotVisible(await driver.findElement(By.className("el-loading-mask"))),20000);
+    await driver.wait(until.elementLocated(By.className("el-loading-mask")), settings.waitingtime);
+    await driver.wait(until.elementIsNotVisible(await driver.findElement(By.className("el-loading-mask"))), settings.waitingtime);
 }
 
 async function clickEnterByXPath(xpath, driver) {
-    let button = await driver.wait(until.elementLocated(By.xpath(xpath)),5000);
-    button = await driver.wait(until.elementIsEnabled(await driver.findElement(By.xpath(xpath))),5000);
+    let button = await driver.wait(until.elementLocated(By.xpath(xpath)), settings.waitingtime);
+    button = await driver.wait(until.elementIsEnabled(await driver.findElement(By.xpath(xpath))), settings.waitingtime);
     button = await driver.findElement(By.xpath(xpath));
     await button.sendKeys(Key.ENTER);
 }
@@ -102,7 +102,7 @@ class Test {
             () => {
                 this.driver.quit();
             },
-            20000);
+            settings.quittime);
     }
 }
 
@@ -122,11 +122,11 @@ class LoginTest extends Test {
         let inputForm;
 
         try {
-            button = await this.driver.wait(until.elementLocated(By.xpath("//a[@href='/login']")));
+            button = await this.driver.wait(until.elementLocated(By.xpath("//a[@href='/login']")), settings.waitingtime);
             button = await this.driver.findElement(By.xpath("//a[@href='/login']"));
             await button.click();
 
-            inputForm = await this.driver.wait(until.elementLocated(By.className("form-control")), 5000);
+            inputForm = await this.driver.wait(until.elementLocated(By.className("form-control")), settings.waitingtime);
             timer = new TimeCount((new Date() - timePoint - this.timersCounter), "loading login page");
             await this.timers.push(timer);
             this.timersCounter = this.timersCounter + timer.time;
@@ -145,8 +145,8 @@ class LoginTest extends Test {
             button = await this.driver.findElement(By.className("btn-warning"));
             await button.click();
 
-            let numbers = await this.driver.wait(until.elementLocated(By.className("text-undefined")), 5000);
-            numbers = await this.driver.wait(until.elementTextContains(await this.driver.findElement(By.xpath("/html/body/div/div[2]/div[2]/div/div/div/div[6]/div[3]/div/div/section/section/div/div[1]/div/span")), "."), 5000);
+            let numbers = await this.driver.wait(until.elementLocated(By.className("text-undefined")),  settings.waitingtime);
+            numbers = await this.driver.wait(until.elementTextContains(await this.driver.findElement(By.xpath("/html/body/div/div[2]/div[2]/div/div/div/div[6]/div[3]/div/div/section/section/div/div[1]/div/span")), "."), settings.waitingtime);
             timer = new TimeCount((new Date() - timePoint), "login complete");
             await this.timers.push(timer);
         }
@@ -176,11 +176,11 @@ class DashboardTest extends Test {
         let numbers;
         let timePoint;
         try {
-            button = await this.driver.wait(until.elementLocated(By.xpath("//a[@href='/login']")));
+            button = await this.driver.wait(until.elementLocated(By.xpath("//a[@href='/login']")), settings.waitingtime);
             button = await this.driver.findElement(By.xpath("//a[@href='/login']"));
             await button.click();
 
-            inputForm = await this.driver.wait(until.elementLocated(By.className("form-control")), 5000);
+            inputForm = await this.driver.wait(until.elementLocated(By.className("form-control")), settings.waitingtime);
 
             inputForm = await this.driver.findElements(By.className("form-control"));
             await inputForm[0].sendKeys(settings.login);
@@ -188,8 +188,8 @@ class DashboardTest extends Test {
             button = await this.driver.findElement(By.className("btn-warning"));
             await button.click();
 
-            numbers = await this.driver.wait(until.elementLocated(By.className("text-undefined")), 5000);
-            numbers = await this.driver.wait(until.elementTextContains(await this.driver.findElement(By.xpath("/html/body/div/div[2]/div[2]/div/div/div/div[6]/div[3]/div/div/section/section/div/div[1]/div/span")), "."), 5000);
+            numbers = await this.driver.wait(until.elementLocated(By.className("text-undefined")), settings.waitingtime);
+            numbers = await this.driver.wait(until.elementTextContains(await this.driver.findElement(By.xpath("/html/body/div/div[2]/div[2]/div/div/div/div[6]/div[3]/div/div/section/section/div/div[1]/div/span")), "."), settings.waitingtime);
 
             //test dashboard starts
             await clickByXPath("//a[@href='/dashboard']", this.driver);
@@ -334,11 +334,11 @@ class PersonsTest extends Test {
         let numbers;
 
         try {
-            button = await this.driver.wait(until.elementLocated(By.xpath("//a[@href='/login']")));
+            button = await this.driver.wait(until.elementLocated(By.xpath("//a[@href='/login']")), settings.waitingtime);
             button = await this.driver.findElement(By.xpath("//a[@href='/login']"));
             await button.click();
 
-            inputForm = await this.driver.wait(until.elementLocated(By.className("form-control")), 5000);
+            inputForm = await this.driver.wait(until.elementLocated(By.className("form-control")), settings.waitingtime);
 
             inputForm = await this.driver.findElements(By.className("form-control"));
             await inputForm[0].sendKeys(settings.login);
@@ -346,15 +346,15 @@ class PersonsTest extends Test {
             button = await this.driver.findElement(By.className("btn-warning"));
             await button.click();
 
-            numbers = await this.driver.wait(until.elementLocated(By.className("text-undefined")), 5000);
-            numbers = await this.driver.wait(until.elementTextContains(await this.driver.findElement(By.xpath("/html/body/div/div[2]/div[2]/div/div/div/div[6]/div[3]/div/div/section/section/div/div[1]/div/span")), "."), 5000);
+            numbers = await this.driver.wait(until.elementLocated(By.className("text-undefined")), settings.waitingtime);
+            numbers = await this.driver.wait(until.elementTextContains(await this.driver.findElement(By.xpath("/html/body/div/div[2]/div[2]/div/div/div/div[6]/div[3]/div/div/section/section/div/div[1]/div/span")), "."), settings.waitingtime);
 
             //test persons starts
             //loading page
             await clickByXPath("//a[@href='/persons']", this.driver);
             timePoint = this.timersCounter + this.timers[0].time;
             this.timersCounter = 0;
-            infoCards = await this.driver.wait(until.elementLocated(By.className("info-cards-value")), 5000);
+            infoCards = await this.driver.wait(until.elementLocated(By.className("info-cards-value")), settings.waitingtime);
             timer = new TimeCount((new Date() - timePoint - this.timersCounter), "loading persons page");
             await this.timers.push(timer);
             this.timersCounter = this.timersCounter + timer.time;
@@ -369,8 +369,8 @@ class PersonsTest extends Test {
         //elements on page picker
         try {
             await clickEnterAndWaitByXpath("/html/body/div[1]/div[2]/div[2]/div/div/div/div[3]/div/div[1]/div/div/input", this.driver);
-            await this.driver.wait(until.elementIsEnabled(await this.driver.findElement(By.className("el-input el-input--suffix is-focus"))),20000);
-            button = await this.driver.wait(until.elementIsVisible(await this.driver.findElement(By.xpath("/html/body/div[2]/div[1]/div[1]/ul/li[3]"))), 5000);
+            await this.driver.wait(until.elementIsEnabled(await this.driver.findElement(By.className("el-input el-input--suffix is-focus"))), settings.waitingtime);
+            button = await this.driver.wait(until.elementIsVisible(await this.driver.findElement(By.xpath("/html/body/div[2]/div[1]/div[1]/ul/li[3]"))), settings.waitingtime);
             await clickAndWaitByXpath("/html/body/div[2]/div[1]/div[1]/ul/li[3]", this.driver);
             timer = new TimeCount((new Date() - timePoint - this.timersCounter), "elements on page checked");
             await this.timers.push(timer);
@@ -386,7 +386,7 @@ class PersonsTest extends Test {
         // forward to person`s page
         try {
             await clickEnterByXPath("/html/body/div[1]/div[2]/div[2]/div/div/div/div[3]/div/div[3]/div/div[4]/div[2]/table/tbody/tr[1]/td[12]/div/button/a", this.driver);
-            await this.driver.wait(until.elementLocated(By.xpath("//div[@data-msgid='Employee']")), 5000);
+            await this.driver.wait(until.elementLocated(By.xpath("//div[@data-msgid='Employee']")), settings.waitingtime);
             timer = new TimeCount((new Date() - timePoint - this.timersCounter), "open person page");
             await this.timers.push(timer);
             this.timersCounter = this.timersCounter + timer.time;
@@ -403,7 +403,7 @@ class PersonsTest extends Test {
         //day
         try {
             await clickEnterByXPath("//div[@data-toggle='timeButtons']/button[1]", this.driver);
-            button = await this.driver.wait(until.elementTextContains(await this.driver.findElement(By.xpath("/html/body/div/div[2]/div[2]/div/div/div[1]/div[3]/div[2]/div[4]/div/div/footer/div[2]")), "сегодня"), 5000);
+            button = await this.driver.wait(until.elementTextContains(await this.driver.findElement(By.xpath("/html/body/div/div[2]/div[2]/div/div/div[1]/div[3]/div[2]/div[4]/div/div/footer/div[2]")), "сегодня"), settings.waitingtime);
             timer = new TimeCount((new Date() - timePoint - this.timersCounter), "day button checked");
             await this.timers.push(timer);
             this.timersCounter = this.timersCounter + timer.time;
@@ -418,7 +418,7 @@ class PersonsTest extends Test {
         //week
         try {
             await clickEnterByXPath("//div[@data-toggle='timeButtons']/button[2]", this.driver);
-            button = await this.driver.wait(until.elementTextContains(await this.driver.findElement(By.xpath("/html/body/div/div[2]/div[2]/div/div/div[1]/div[3]/div[2]/div[4]/div/div/footer/div[2]")), "неделю"), 5000);
+            button = await this.driver.wait(until.elementTextContains(await this.driver.findElement(By.xpath("/html/body/div/div[2]/div[2]/div/div/div[1]/div[3]/div[2]/div[4]/div/div/footer/div[2]")), "неделю"), settings.waitingtime);
             timer = new TimeCount((new Date() - timePoint - this.timersCounter), "week button checked");
             await this.timers.push(timer);
             this.timersCounter = this.timersCounter + timer.time;
@@ -433,7 +433,7 @@ class PersonsTest extends Test {
         //month
         try {
             await clickEnterByXPath("//div[@data-toggle='timeButtons']/button[3]", this.driver);
-            button = await this.driver.wait(until.elementTextContains(await this.driver.findElement(By.xpath("/html/body/div/div[2]/div[2]/div/div/div[1]/div[3]/div[2]/div[4]/div/div/footer/div[2]")), "месяц"), 5000);
+            button = await this.driver.wait(until.elementTextContains(await this.driver.findElement(By.xpath("/html/body/div/div[2]/div[2]/div/div/div[1]/div[3]/div[2]/div[4]/div/div/footer/div[2]")), "месяц"), settings.waitingtime);
             timer = new TimeCount((new Date() - timePoint - this.timersCounter), "month button checked");
             await this.timers.push(timer);
             this.timersCounter = this.timersCounter + timer.time;
@@ -452,7 +452,7 @@ class PersonsTest extends Test {
             inputForm = await this.driver.findElement(By.xpath("//input[@placeholder='Конечная дата']"));
             await inputForm.sendKeys("2019-08-31");
             await inputForm.sendKeys(Key.ENTER);
-            button = await this.driver.wait(until.elementTextContains(await this.driver.findElement(By.xpath("/html/body/div/div[2]/div[2]/div/div/div[1]/div[3]/div[2]/div[4]/div/div/footer/div[2]")), "14.08.19 по 31.08.19"), 5000);
+            button = await this.driver.wait(until.elementTextContains(await this.driver.findElement(By.xpath("/html/body/div/div[2]/div[2]/div/div/div[1]/div[3]/div[2]/div[4]/div/div/footer/div[2]")), "14.08.19 по 31.08.19"), settings.waitingtime);
             timer = new TimeCount((new Date() - timePoint - this.timersCounter), "date picker checked");
             await this.timers.push(timer);
             this.timersCounter = this.timersCounter + timer.time;
@@ -466,7 +466,7 @@ class PersonsTest extends Test {
 
         //settings button
         try {
-            await this.driver.wait(until.elementIsVisible(await this.driver.findElement(By.xpath("/html/body/div/div[2]/div[2]/div/div/div[1]/div[3]/div[1]/div[2]/button"))), 5000);
+            await this.driver.wait(until.elementIsVisible(await this.driver.findElement(By.xpath("/html/body/div/div[2]/div[2]/div/div/div[1]/div[3]/div[1]/div[2]/button"))), settings.waitingtime);
             await clickEnterAndWaitByXpath("/html/body/div/div[2]/div[2]/div/div/div[1]/div[3]/div[1]/div[2]/button", this.driver);
             await clickEnterAndWaitByXpath("/html/body/div[1]/div[2]/div[2]/div/div/div[1]/div[1]/div/div/div[3]/div/button", this.driver);
             timer = new TimeCount((new Date() - timePoint - this.timersCounter), "settings checked");
@@ -485,8 +485,8 @@ class PersonsTest extends Test {
         for (let i = 0; i < personsPages.length; i++) {
             try {
                 await clickEnterByXPath("//a[@href='/persons/1/" + personsPages[i] + "']", this.driver);
-                await this.driver.wait(until.elementLocated(By.className("el-loading-mask")),20000);
-                await this.driver.wait(until.elementIsNotVisible(await this.driver.findElement(By.className("el-loading-mask"))),20000);
+                await this.driver.wait(until.elementLocated(By.className("el-loading-mask")), settings.waitingtime);
+                await this.driver.wait(until.elementIsNotVisible(await this.driver.findElement(By.className("el-loading-mask"))), settings.waitingtime);
                 timer = new TimeCount((new Date() - timePoint - this.timersCounter),"person`s " + personsPages[i] + " loaded");
                 await this.timers.push(timer);
                 this.timersCounter = this.timersCounter + timer.time;
@@ -500,7 +500,7 @@ class PersonsTest extends Test {
 
             try {
                 await this.driver.navigate().back();
-                await this.driver.wait(until.elementLocated(By.xpath("//div[@data-msgid='Employee']")),5000);
+                await this.driver.wait(until.elementLocated(By.xpath("//div[@data-msgid='Employee']")), settings.waitingtime);
                 timer = new TimeCount((new Date() - timePoint - this.timersCounter),"back to person page");
                 await this.timers.push(timer);
                 this.timersCounter = this.timersCounter + timer.time;
@@ -527,7 +527,7 @@ class PersonsTest extends Test {
 
         try {
             await this.driver.navigate().back();
-            await this.driver.wait(until.elementLocated(By.xpath("//div[@data-msgid='Employee']")), 5000);
+            await this.driver.wait(until.elementLocated(By.xpath("//div[@data-msgid='Employee']")), settings.waitingtime);
             timer = new TimeCount((new Date() - timePoint - this.timersCounter), "back to person page");
             await this.timers.push(timer);
             this.timersCounter = this.timersCounter + timer.time;
@@ -555,7 +555,7 @@ class PersonsTest extends Test {
 
         try {
             await this.driver.navigate().back();
-            await this.driver.wait(until.elementLocated(By.xpath("//div[@data-msgid='Employee']")), 5000);
+            await this.driver.wait(until.elementLocated(By.xpath("//div[@data-msgid='Employee']")), settings.waitingtime);
             timer = new TimeCount((new Date() - timePoint - this.timersCounter), "back to person page");
             await this.timers.push(timer);
             this.timersCounter = this.timersCounter + timer.time;
@@ -572,11 +572,11 @@ class PersonsTest extends Test {
         for (let i = 0; i < inputForm.length; i++) {
             try {
                 inputForm = await this.driver.findElements(By.xpath("//a[@href='/events/events']"));
-                await this.driver.wait(until.elementIsVisible(inputForm[i]), 5000);
-                await this.driver.wait(until.elementIsEnabled(inputForm[i]), 5000);
+                await this.driver.wait(until.elementIsVisible(inputForm[i]), settings.waitingtime);
+                await this.driver.wait(until.elementIsEnabled(inputForm[i]), settings.waitingtime);
                 await inputForm[i].sendKeys(Key.ENTER);
-                await this.driver.wait(until.elementLocated(By.className("el-loading-mask")), 20000);
-                await this.driver.wait(until.elementIsNotVisible(await this.driver.findElement(By.className("el-loading-mask"))), 20000);
+                await this.driver.wait(until.elementLocated(By.className("el-loading-mask")), settings.waitingtime);
+                await this.driver.wait(until.elementIsNotVisible(await this.driver.findElement(By.className("el-loading-mask"))), settings.waitingtime);
                 timer = new TimeCount((new Date() - timePoint - this.timersCounter), "person`s event page #" + (i + 1) + " loaded");
                 await this.timers.push(timer);
                 this.timersCounter = this.timersCounter + timer.time;
@@ -590,9 +590,9 @@ class PersonsTest extends Test {
 
             try {
                 await this.driver.navigate().back();
-                await this.driver.wait(until.elementLocated(By.xpath("//div[@data-msgid='Employee']")), 5000);
-                await this.driver.wait(until.elementLocated(By.className("el-loading-mask")), 20000);
-                await this.driver.wait(until.elementIsNotVisible(await this.driver.findElement(By.className("el-loading-mask"))), 20000);
+                await this.driver.wait(until.elementLocated(By.xpath("//div[@data-msgid='Employee']")), settings.waitingtime);
+                await this.driver.wait(until.elementLocated(By.className("el-loading-mask")), settings.waitingtime);
+                await this.driver.wait(until.elementIsNotVisible(await this.driver.findElement(By.className("el-loading-mask"))), settings.waitingtime);
                 timer = new TimeCount((new Date() - timePoint - this.timersCounter), "back to person page");
                 await this.timers.push(timer);
                 this.timersCounter = this.timersCounter + timer.time;
@@ -625,11 +625,11 @@ class EventsTest extends Test {
         let timer;
 
         try {
-            button = await this.driver.wait(until.elementLocated(By.xpath("//a[@href='/login']")));
+            button = await this.driver.wait(until.elementLocated(By.xpath("//a[@href='/login']")), settings.waitingtime);
             button = await this.driver.findElement(By.xpath("//a[@href='/login']"));
             await button.click();
 
-            inputForm = await this.driver.wait(until.elementLocated(By.className("form-control")), 5000);
+            inputForm = await this.driver.wait(until.elementLocated(By.className("form-control")), settings.waitingtime);
 
             inputForm = await this.driver.findElements(By.className("form-control"));
             await inputForm[0].sendKeys(settings.login);
@@ -637,8 +637,8 @@ class EventsTest extends Test {
             button = await this.driver.findElement(By.className("btn-warning"));
             await button.click();
 
-            numbers = await this.driver.wait(until.elementLocated(By.className("text-undefined")), 5000);
-            numbers = await this.driver.wait(until.elementTextContains(await this.driver.findElement(By.xpath("/html/body/div/div[2]/div[2]/div/div/div/div[6]/div[3]/div/div/section/section/div/div[1]/div/span")), "."), 5000);
+            numbers = await this.driver.wait(until.elementLocated(By.className("text-undefined")), settings.waitingtime);
+            numbers = await this.driver.wait(until.elementTextContains(await this.driver.findElement(By.xpath("/html/body/div/div[2]/div[2]/div/div/div/div[6]/div[3]/div/div/section/section/div/div[1]/div/span")), "."), settings.waitingtime);
 
             //test events starts
             //open events
@@ -706,8 +706,8 @@ class EventsTest extends Test {
             inputForm = await this.driver.findElement(By.xpath("//input[@placeholder='Конечная дата']"));
             await inputForm.sendKeys("2019-08-31");
             await inputForm.sendKeys(Key.ENTER);
-            await this.driver.wait(until.elementLocated(By.className("el-loading-mask")), 20000);
-            await this.driver.wait(until.elementIsNotVisible(await this.driver.findElement(By.className("el-loading-mask"))), 20000);
+            await this.driver.wait(until.elementLocated(By.className("el-loading-mask")), settings.waitingtime);
+            await this.driver.wait(until.elementIsNotVisible(await this.driver.findElement(By.className("el-loading-mask"))), settings.waitingtime);
             timer = new TimeCount((new Date() - timePoint - this.timersCounter), "date picker checked");
             await this.timers.push(timer);
             this.timersCounter = this.timersCounter + timer.time;
@@ -722,7 +722,7 @@ class EventsTest extends Test {
         //elements on page picker
         try {
             await clickEnterAndWaitByXpath("/html/body/div[1]/div[2]/div[2]/div/div/div/div[5]/div/div/div[2]/div[1]/div/div/input", this.driver);
-            await this.driver.wait(until.elementIsEnabled(await this.driver.findElement(By.className("el-input el-input--suffix is-focus"))),20000);
+            await this.driver.wait(until.elementIsEnabled(await this.driver.findElement(By.className("el-input el-input--suffix is-focus"))), settings.waitingtime);
             await clickAndWaitByXpath("/html/body/div[3]/div[1]/div[1]/ul/li[3]", this.driver);
             timer = new TimeCount((new Date() - timePoint - this.timersCounter), "elements on page checked");
             await this.timers.push(timer);
@@ -755,11 +755,11 @@ class DevicesTest extends Test {
         let timer;
 
         try {
-            button = await this.driver.wait(until.elementLocated(By.xpath("//a[@href='/login']")));
+            button = await this.driver.wait(until.elementLocated(By.xpath("//a[@href='/login']")), settings.waitingtime);
             button = await this.driver.findElement(By.xpath("//a[@href='/login']"));
             await button.click();
 
-            inputForm = await this.driver.wait(until.elementLocated(By.className("form-control")), 5000);
+            inputForm = await this.driver.wait(until.elementLocated(By.className("form-control")), settings.waitingtime);
 
             inputForm = await this.driver.findElements(By.className("form-control"));
             await inputForm[0].sendKeys(settings.login);
@@ -767,8 +767,8 @@ class DevicesTest extends Test {
             button = await this.driver.findElement(By.className("btn-warning"));
             await button.click();
 
-            numbers = await this.driver.wait(until.elementLocated(By.className("text-undefined")), 5000);
-            numbers = await this.driver.wait(until.elementTextContains(await this.driver.findElement(By.xpath("/html/body/div/div[2]/div[2]/div/div/div/div[6]/div[3]/div/div/section/section/div/div[1]/div/span")), "."), 5000);
+            numbers = await this.driver.wait(until.elementLocated(By.className("text-undefined")), settings.waitingtime);
+            numbers = await this.driver.wait(until.elementTextContains(await this.driver.findElement(By.xpath("/html/body/div/div[2]/div[2]/div/div/div/div[6]/div[3]/div/div/section/section/div/div[1]/div/span")), "."), settings.waitingtime);
 
             //test devices starts
             //forward to devices page
@@ -789,7 +789,7 @@ class DevicesTest extends Test {
         //elements on page picker
         try {
             await clickEnterAndWaitByXpath("/html/body/div/div[2]/div[2]/div/div/div/div[3]/div[1]/div/div/div[1]/div/div[1]/input", this.driver);
-            await this.driver.wait(until.elementIsEnabled(await this.driver.findElement(By.className("el-input el-input--suffix is-focus"))),20000);
+            await this.driver.wait(until.elementIsEnabled(await this.driver.findElement(By.className("el-input el-input--suffix is-focus"))), settings.waitingtime);
             await clickAndWaitByXpath("/html/body/div[2]/div[1]/div[1]/ul/li[3]", this.driver);
             timer = new TimeCount((new Date() - timePoint - this.timersCounter), "elements on page checked");
             await this.timers.push(timer);
@@ -804,11 +804,11 @@ class DevicesTest extends Test {
 
         //forward to device page
         try {
-            await this.driver.wait(until.elementIsNotVisible(await this.driver.findElement(By.className("el-loading-mask"))), 20000);
+            await this.driver.wait(until.elementIsNotVisible(await this.driver.findElement(By.className("el-loading-mask"))), settings.waitingtime);
             button = await this.driver.findElement(By.xpath("//a[@href='/devices/device/3']"));
             await this.driver.executeScript("arguments[0].click();",button);
-            await this.driver.wait(until.elementLocated(By.className("el-loading-mask")),20000);
-            await this.driver.wait(until.elementIsNotVisible(await this.driver.findElement(By.className("el-loading-mask"))),20000);
+            await this.driver.wait(until.elementLocated(By.className("el-loading-mask")), settings.waitingtime);
+            await this.driver.wait(until.elementIsNotVisible(await this.driver.findElement(By.className("el-loading-mask"))), settings.waitingtime);
             timer = new TimeCount((new Date() - timePoint - this.timersCounter), "loading device page");
             await this.timers.push(timer);
             this.timersCounter = this.timersCounter + timer.time;
@@ -870,8 +870,8 @@ class DevicesTest extends Test {
             inputForm = await this.driver.findElement(By.xpath("//input[@placeholder='Конечная дата']"));
             await inputForm.sendKeys("2019-08-31");
             await inputForm.sendKeys(Key.ENTER);
-            await this.driver.wait(until.elementLocated(By.className("el-loading-mask")), 20000);
-            await this.driver.wait(until.elementIsNotVisible(await this.driver.findElement(By.className("el-loading-mask"))), 20000);
+            await this.driver.wait(until.elementLocated(By.className("el-loading-mask")), settings.waitingtime);
+            await this.driver.wait(until.elementIsNotVisible(await this.driver.findElement(By.className("el-loading-mask"))), settings.waitingtime);
             timer = new TimeCount((new Date() - timePoint - this.timersCounter), "date picker checked");
             await this.timers.push(timer);
             this.timersCounter = this.timersCounter + timer.time;
@@ -886,7 +886,7 @@ class DevicesTest extends Test {
         //elements on page picker
         try {
             await clickEnterAndWaitByXpath("/html/body/div/div[2]/div[2]/div/div/div/div[6]/div/div[1]/div/div[1]/input", this.driver);
-            await this.driver.wait(until.elementIsEnabled(await this.driver.findElement(By.className("el-input el-input--suffix is-focus"))),20000);
+            await this.driver.wait(until.elementIsEnabled(await this.driver.findElement(By.className("el-input el-input--suffix is-focus"))), settings.waitingtime);
             await clickAndWaitByXpath("/html/body/div[3]/div[1]/div[1]/ul/li[3]", this.driver);
             timer = new TimeCount((new Date() - timePoint - this.timersCounter), "elements on page checked");
             await this.timers.push(timer);
@@ -904,8 +904,8 @@ class DevicesTest extends Test {
         try {
             button = await this.driver.findElement(By.xpath("//a[@href='/persons/23/profile']"));
             await this.driver.executeScript("arguments[0].click();",button);
-            await this.driver.wait(until.elementLocated(By.className("el-loading-mask")),20000);
-            await this.driver.wait(until.elementIsNotVisible(await this.driver.findElement(By.className("el-loading-mask"))),20000);
+            await this.driver.wait(until.elementLocated(By.className("el-loading-mask")), settings.waitingtime);
+            await this.driver.wait(until.elementIsNotVisible(await this.driver.findElement(By.className("el-loading-mask"))), settings.waitingtime);
             timer = new TimeCount((new Date() - timePoint), "person`s page loaded");
             await this.timers.push(timer);
             this.timersCounter = timer.time + timePoint - this.timers[0].time;

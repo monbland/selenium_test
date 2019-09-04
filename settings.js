@@ -6,3 +6,5 @@ exports.logpath = "./log.txt";
 exports.elasticurl = 'http://localhost:9200';
 exports.elasticindex = 'test';
 exports.chromepath = '/opt/google/chrome/google-chrome';
+exports.waitingtime = 20000;
+exports.quittime = 40000;
